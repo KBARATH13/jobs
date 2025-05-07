@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post a Job</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .toolbar button { @apply p-1 hover:bg-gray-200 rounded; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-container { animation: fadeIn 0.3s ease-out; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl p-4 sm:p-6 w-full sm:w-11/12 md:w-3/4 lg:w-[500px] max-h-[90vh] flex flex-col border border-purple-200 form-container">
+    <div class="mb-4 text-center">
+      <h2 class="text-lg sm:text-xl font-bold text-purple-700 mb-1">Post a Job</h2>
+      <p class="text-gray-500 text-xs sm:text-sm">Let job seekers find you!</p>
+    </div>
+
+    <form id="jobPostForm" class="flex-1 overflow-y-auto space-y-4 pr-2">
+      <!-- Job Title -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Job Title *</label>
+        <input type="text" id="jobTitle" placeholder="e.g., Cashier" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400" required>
+      </div>
+
+      <!-- Job Time -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Job Type *</label>
+        <select id="jobTime" required class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+          <option value="">Select...</option>
+          <option>Part-Time</option>
+          <option>One-Time-Gig</option>
+          <option>Freelance</option>
+          <option>Remote</option>
+        </select>
+      </div>
+
+      <!-- Job Role -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Job Role</label>
+        <input type="text" id="jobRole" placeholder="e.g., Assistant" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+      </div>
+
+      <!-- Vacancies -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Vacancies *</label>
+        <input type="number" id="vacancies" placeholder="e.g., 3" min="1" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400" required>
+      </div>
+
+      <!-- Phone Number -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Contact Number *</label>
+        <div class="flex items-center border border-gray-300 rounded-lg p-2 focus-within:ring-2 focus-within:ring-purple-400">
+          <span class="text-gray-700 mr-1">+91</span>
+          <input type="tel" id="phoneNumber" name="phoneNumber" pattern="^[6-9]\d{9}$" maxlength="10" placeholder="10-digit number" required class="w-full focus:outline-none text-sm" />
+        </div>
+      </div>
+
+      <!-- Pay -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Pay (₹) *</label>
+        <input type="text" id="pay" placeholder="e.g., 200/day" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400" required>
+      </div>
+
+      <!-- Job Date -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Job Date *</label>
+        <input type="date" id="jobDate" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400" required>
+      </div>
+
+       <!-- Job Time (Digits & AM/PM) -->
+       <div>
+        <label for="startTime" class="block text-sm font-medium text-gray-700">Start Time</label>
+        <div class="flex space-x-2">
+          <input type="time" id="startTime" class="w-3/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required />
+          <select id="startTimePeriod" class="w-1/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+        <p id="startTimeError" class="text-[10px] text-red-500 mt-1 hidden">Invalid time format. Please enter a valid time.</p>
+      </div>
+      
+      <div>
+        <label for="endTime" class="block text-sm font-medium text-gray-700">End Time</label>
+        <div class="flex space-x-2">
+          <input type="time" id="endTime" class="w-3/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" required />
+          <select id="endTimePeriod" class="w-1/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+        <p id="endTimeError" class="text-[10px] text-red-500 mt-1 hidden">Invalid time format. Please enter a valid time.</p>
+      </div>
+      
+      
+
+      <!-- Location (Manual and Auto) -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Location Link</label>
+        <input type="url" id="locationLink" placeholder="Google Maps link" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+        <button type="button" onclick="getLocation()" class="mt-1 text-purple-600 hover:underline text-sm">Auto-detect my location</button>
+      </div>
+
+      <!-- Job Description -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700 text-sm">Job Description *</label>
+        <div class="border border-gray-300 rounded-lg">
+          <div class="toolbar flex items-center space-x-1 p-1 bg-gray-100">
+            <button type="button" onclick="format('bold')"><b>B</b></button>
+            <button type="button" onclick="format('insertUnorderedList')">• List</button>
+          </div>
+          <div id="jobDesc" contenteditable="true" class="p-2 min-h-[80px] max-h-[120px] overflow-y-auto focus:outline-none text-sm"></div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-2">
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-semibold text-sm transition">Post Job</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function format(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const link = https://www.google.com/maps?q=${lat},${lon};
+          document.getElementById('locationLink').value = link;
+        }, () => {
+          alert("Location access denied.");
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    document.getElementById('jobPostForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const job = {
+        title: document.getElementById('jobTitle').value.trim(),
+        time: document.getElementById('jobTime').value,
+        role: document.getElementById('jobRole').value.trim(),
+        vacancies: document.getElementById('vacancies').value,
+        phone: document.getElementById('phoneNumber').value.trim(),
+        pay: document.getElementById('pay').value.trim(),
+        date: document.getElementById('jobDate').value,
+        startTime: document.getElementById('startTime').value,
+        endTime: document.getElementById('endTime').value,
+        locationLink: document.getElementById('locationLink').value.trim(),
+        description: document.getElementById('jobDesc').innerText.trim()
+      };
+
+      if (!job.title || !job.time || !job.vacancies || !job.phone || !job.pay || !job.date || !job.startTime || !job.endTime || !job.description) {
+        alert('Please fill all required fields.');
+        return;
+      }
+
+      // Save to localStorage
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      jobs.push(job);
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+
+      alert('Job posted successfully!');
+      this.reset();
+      document.getElementById('jobDesc').innerHTML = '';
+    });
+  </script>
+</body>
+</html>
